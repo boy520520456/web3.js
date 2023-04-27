@@ -81,6 +81,7 @@ export type AbiParameter = {
 	readonly components?: ReadonlyArray<AbiParameter>;
 	readonly arrayLength?: number;
 	readonly arrayChildren?: ReadonlyArray<AbiParameter>;
+    readonly internalType?: string;
 };
 
 type FragmentTypes = 'constructor' | 'event' | 'function' | 'fallback';
@@ -97,6 +98,7 @@ export type AbiConstructorFragment = AbiBaseFragment & {
 	readonly type: string | 'constructor';
 	readonly stateMutability: string | 'nonpayable' | 'payable';
 	readonly inputs?: ReadonlyArray<AbiParameter>;
+    
 };
 
 // https://docs.soliditylang.org/en/latest/abi-spec.html#json
