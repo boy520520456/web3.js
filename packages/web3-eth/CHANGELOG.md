@@ -125,3 +125,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Removed dependencies @ethereumjs/tx, @ethereumjs/common (#5963)
 
 ## [Unreleased]
+
+### Changed
+
+-   `formatTransaction` no longer throws a `TransactionDataAndInputError` if it's passed a transaction object with both `data` and `input` properties set (as long as they are the same value) (#6064)
+-   Refactored documentation for `rpc_method_wrappers` to point to the previously duplicated documentation found under the `Web3Eth` class documentation (#6054)
+-   Replaced Buffer for Uint8Array (#6004)

@@ -62,7 +62,7 @@ export const getTransactionFromOrToAttr = (
 		| TransactionWithFromLocalWalletIndex
 		| TransactionWithToLocalWalletIndex
 		| TransactionWithFromAndToLocalWalletIndex,
-	privateKey?: HexString | Buffer,
+	privateKey?: HexString | Uint8Array,
 ): Address | undefined => {
 	if (transaction !== undefined && attr in transaction && transaction[attr] !== undefined) {
 		if (typeof transaction[attr] === 'string' && isAddress(transaction[attr] as string)) {
@@ -71,7 +71,7 @@ export const getTransactionFromOrToAttr = (
 		if (!isHexStrict(transaction[attr] as string) && isNumber(transaction[attr] as Numbers)) {
 			if (web3Context.wallet) {
 				const account = web3Context.wallet.get(
-					format({ eth: 'uint' }, transaction[attr] as Numbers, NUMBER_DATA_FORMAT),
+					format({ format: 'uint' }, transaction[attr] as Numbers, NUMBER_DATA_FORMAT),
 				);
 
 				if (!isNullish(account)) {
@@ -117,7 +117,7 @@ export const getTransactionType = (
 
 	if (!isNullish(inferredType)) return inferredType;
 	if (!isNullish(web3Context.defaultTransactionType))
-		return format({ eth: 'uint' }, web3Context.defaultTransactionType, ETH_DATA_FORMAT);
+		return format({ format: 'uint' }, web3Context.defaultTransactionType, ETH_DATA_FORMAT);
 
 	return undefined;
 };
@@ -127,7 +127,7 @@ export const getTransactionType = (
 export async function defaultTransactionBuilder<ReturnType = Transaction>(options: {
 	transaction: Transaction;
 	web3Context: Web3Context<EthExecutionAPI & Web3NetAPI>;
-	privateKey?: HexString | Buffer;
+	privateKey?: HexString | Uint8Array;
 }): Promise<ReturnType> {
 	// let populatedTransaction = { ...options.transaction } as unknown as InternalTransaction;
 	let populatedTransaction = format(
@@ -235,7 +235,7 @@ export async function defaultTransactionBuilder<ReturnType = Transaction>(option
 export const transactionBuilder = async <ReturnType = Transaction>(options: {
 	transaction: Transaction;
 	web3Context: Web3Context<EthExecutionAPI>;
-	privateKey?: HexString | Buffer;
+	privateKey?: HexString | Uint8Array;
 	// eslint-disable-next-line @typescript-eslint/require-await
 }) =>
 	(options.web3Context.transactionBuilder ?? defaultTransactionBuilder)({
